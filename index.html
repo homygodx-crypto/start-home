@@ -1680,25 +1680,30 @@
     if (!type) { alert('업종을 선택해주세요.'); return; }
     if (!agree) { alert('개인정보 수집·이용에 동의해주세요.'); return; }
 
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxW5GRKe8aJvY2d6ILBHR2IT9JOctwgqe1UP_kocMdzk6iMEf1gBNcHDiZ2hNKsM7tbTg/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDo-R3W1Tt3NDSCKe3cFDfk3ykKr7iVuRhDjqzO3qA4cc0lwSViZyewk3vHZ3MVgNczQ/exec';
 
     const btn = document.getElementById('submitBtn');
     btn.textContent = '전송 중...';
     btn.disabled = true;
 
+    // CORS 우회: no-cors 모드 + form 방식으로 전송
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('phone', phone);
+    formData.append('biz', biz);
+    formData.append('type', type);
+    formData.append('plan', plan);
+    formData.append('message', message);
+
     fetch(SCRIPT_URL, {
       method: 'POST',
-      body: JSON.stringify({ name, phone, biz, type, plan, message }),
+      mode: 'no-cors',
+      body: formData,
     })
-    .then(r => r.json())
-    .then(res => {
-      if (res.result === 'success') {
-        document.getElementById('contactFormWrap').style.display = 'none';
-        document.getElementById('formSuccess').style.display = 'block';
-        document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } else {
-        alert('전송 중 오류가 발생했습니다. 다시 시도해주세요.');
-      }
+    .then(() => {
+      document.getElementById('contactFormWrap').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'center' });
     })
     .catch(() => alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.'))
     .finally(() => { btn.textContent = '무료 상담 신청하기 →'; btn.disabled = false; });

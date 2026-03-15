@@ -601,7 +601,7 @@
 
 <script>
   // ── CONFIG ──
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxW5GRKe8aJvY2d6ILBHR2IT9JOctwgqe1UP_kocMdzk6iMEf1gBNcHDiZ2hNKsM7tbTg/exec'; // ← 배포 URL 붙여넣기
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDo-R3W1Tt3NDSCKe3cFDfk3ykKr7iVuRhDjqzO3qA4cc0lwSViZyewk3vHZ3MVgNczQ/exec'; // ← 배포 URL 붙여넣기
   const STORAGE_KEY = 'changebhome_inquiries';
   const ADMIN_ID = 'admin';
   const ADMIN_PW = 'admin1234';
@@ -638,7 +638,7 @@
   // ── DATA FETCH ──
   function loadData() {
     showLoading(true);
-    if (SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbxW5GRKe8aJvY2d6ILBHR2IT9JOctwgqe1UP_kocMdzk6iMEf1gBNcHDiZ2hNKsM7tbTg/exec') {
+    if (SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbyDo-R3W1Tt3NDSCKe3cFDfk3ykKr7iVuRhDjqzO3qA4cc0lwSViZyewk3vHZ3MVgNczQ/exec') {
       // fallback: localStorage
       cachedData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
       showLoading(false);
@@ -834,7 +834,7 @@
     if (idx < 0) return;
     cachedData[idx].status = newStatus;
     // 구글시트 업데이트
-    if (SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbxW5GRKe8aJvY2d6ILBHR2IT9JOctwgqe1UP_kocMdzk6iMEf1gBNcHDiZ2hNKsM7tbTg/exec') {
+    if (SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbyDo-R3W1Tt3NDSCKe3cFDfk3ykKr7iVuRhDjqzO3qA4cc0lwSViZyewk3vHZ3MVgNczQ/exec') {
       fetch(`${SCRIPT_URL}?action=updateStatus&id=${currentId}&status=${encodeURIComponent(newStatus)}`).catch(()=>{});
     } else {
       const local = JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
@@ -847,7 +847,7 @@
   function deleteInquiry() {
     if (!confirm('이 문의를 삭제하시겠습니까?')) return;
     cachedData = cachedData.filter(d => String(d.id) !== String(currentId));
-    if (SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbxW5GRKe8aJvY2d6ILBHR2IT9JOctwgqe1UP_kocMdzk6iMEf1gBNcHDiZ2hNKsM7tbTg/exec') {
+    if (SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbyDo-R3W1Tt3NDSCKe3cFDfk3ykKr7iVuRhDjqzO3qA4cc0lwSViZyewk3vHZ3MVgNczQ/exec') {
       fetch(`${SCRIPT_URL}?action=delete&id=${currentId}`).catch(()=>{});
     } else {
       const local = JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]').filter(d=>String(d.id)!==String(currentId));
