@@ -1680,26 +1680,11 @@
     if (!type) { alert('업종을 선택해주세요.'); return; }
     if (!agree) { alert('개인정보 수집·이용에 동의해주세요.'); return; }
 
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxW5GRKe8aJvY2d6ILBHR2IT9JOctwgqe1UP_kocMdzk6iMEf1gBNcHDiZ2hNKsM7tbTg/exec'; // ← 여기에 배포 URL 붙여넣기
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxW5GRKe8aJvY2d6ILBHR2IT9JOctwgqe1UP_kocMdzk6iMEf1gBNcHDiZ2hNKsM7tbTg/exec';
 
     const btn = document.getElementById('submitBtn');
     btn.textContent = '전송 중...';
     btn.disabled = true;
-
-    if (SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbxW5GRKe8aJvY2d6ILBHR2IT9JOctwgqe1UP_kocMdzk6iMEf1gBNcHDiZ2hNKsM7tbTg/exec') {
-      // URL 미설정 시 로컬 저장으로 fallback
-      const inquiry = { id: Date.now(), name, phone, biz, type, plan, message,
-        date: new Date().toLocaleString('ko-KR'), status: '미확인' };
-      const existing = JSON.parse(localStorage.getItem('changebhome_inquiries') || '[]');
-      existing.unshift(inquiry);
-      localStorage.setItem('changebhome_inquiries', JSON.stringify(existing));
-      document.getElementById('contactFormWrap').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-      document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      btn.textContent = '무료 상담 신청하기 →';
-      btn.disabled = false;
-      return;
-    }
 
     fetch(SCRIPT_URL, {
       method: 'POST',
@@ -1730,4 +1715,14 @@
     });
   }
 
-  window.addEventListener('scr
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('mainNav');
+    if (window.scrollY > 60) {
+      nav.style.boxShadow = '0 4px 24px rgba(0,0,0,0.08)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>
