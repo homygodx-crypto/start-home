@@ -425,6 +425,7 @@
     const id = document.getElementById('loginId').value;
     const pw = document.getElementById('loginPw').value;
     if (id === ADMIN_ID && pw === ADMIN_PW) {
+      sessionStorage.setItem('changebhome_admin', 'true');
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('adminLayout').style.display = 'flex';
       init();
@@ -433,11 +434,21 @@
     }
   }
   function doLogout() {
+    sessionStorage.removeItem('changebhome_admin');
     document.getElementById('loginScreen').style.display = 'flex';
     document.getElementById('adminLayout').style.display = 'none';
     document.getElementById('loginId').value = '';
     document.getElementById('loginPw').value = '';
   }
+
+  // 페이지 로드 시 로그인 상태 확인
+  (function checkSession() {
+    if (sessionStorage.getItem('changebhome_admin') === 'true') {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminLayout').style.display = 'flex';
+      init();
+    }
+  })();
 
   // ── INIT ──
   function init() {
