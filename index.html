@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>창업홈 - 소상공인을 위한 홈페이지 플랫폼</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1B5EF7;
+    --primary-dark: #0D3ECC;
+    --primary-light: #EEF3FF;
+    --accent: #FF4B2B;
+    --accent2: #00C98D;
+    --dark: #0A0F1E;
+    --dark2: #111827;
+    --mid: #374151;
+    --muted: #6B7280;
+    --light: #F9FAFB;
+    --white: #FFFFFF;
+    --border: rgba(0,0,0,0.08);
+    --shadow: 0 4px 24px rgba(27,94,247,0.10);
+    --radius: 16px;
+    --radius-lg: 28px;
+    --transition: 0.35s cubic-bezier(.4,0,.2,1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--white);
+    color: var(--dark);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    height: 68px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+    transition: var(--transition);
+  }
+  .nav-logo {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--primary);
+    letter-spacing: -1px;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.2s;
+    letter-spacing: -0.3px;
+  }
+  .nav-links a:hover { color: var(--primary); }
+  .nav-cta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .btn-ghost {
+    padding: 9px 20px;
+    border: 1.5px solid var(--border);
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--mid);
+    background: transparent;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+  }
+  .btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+  .btn-primary {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--primary);
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(27,94,247,0.35);
+  }
+  .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(27,94,247,0.45); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 100px 5% 80px;
+    background: linear-gradient(135deg, #0A0F1E 0%, #1B2A5E 50%, #0A1540 100%);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(27,94,247,0.25) 0%, transparent 65%);
+    top: -200px; right: -200px;
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(255,75,43,0.15) 0%, transparent 65%);
+    bottom: -100px; left: 10%;
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(27,94,247,0.2);
+    border: 1px solid rgba(27,94,247,0.4);
+    border-radius: 50px;
+    padding: 6px 16px 6px 8px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent2);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+  .hero-badge span { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85); letter-spacing: 0.3px; }
+  .hero-title {
+    font-size: clamp(38px, 5vw, 62px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.15;
+    letter-spacing: -2px;
+    margin-bottom: 22px;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero-title .accent-blue { color: #5B8FFF; }
+  .hero-title .accent-red { color: var(--accent); }
+  .hero-desc {
+    font-size: 17px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.8;
+    margin-bottom: 36px;
+    font-weight: 400;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .btn-hero-primary {
+    padding: 16px 36px;
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    box-shadow: 0 8px 28px rgba(27,94,247,0.45);
+    letter-spacing: -0.3px;
+  }
+  .btn-hero-primary:hover { background: #3B74FF; transform: translateY(-2px); box-shadow: 0 12px 36px rgba(27,94,247,0.55); }
+  .btn-hero-ghost {
+    padding: 16px 30px;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.85);
+    border: 1.5px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+  }
+  .btn-hero-ghost:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.4); }
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 48px;
+    padding-top: 36px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    animation: fadeUp 0.7s 0.4s ease both;
+  }
+  .stat-item { display: flex; flex-direction: column; gap: 4px; }
+  .stat-num { font-size: 28px; font-weight: 900; color: var(--white); letter-spacing: -1.5px; }
+  .stat-num span { color: var(--primary); }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 400; }
+  .hero-visual {
+    position: relative;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  .hero-mockup {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    backdrop-filter: blur(10px);
+    position: relative;
+  }
+  .mockup-bar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  .mockup-dot {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+  }
+  .d1 { background: #FF5F57; }
+  .d2 { background: #FFBD2E; }
+  .d3 { background: #28C840; }
+  .mockup-screen {
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .mockup-header {
+    background: var(--primary);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .mockup-logo-text { font-size: 14px; font-weight: 800; color: white; letter-spacing: -0.5px; }
+  .mockup-nav-pills { display: flex; gap: 8px; }
+  .m-pill {
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 600;
+    background: rgba(255,255,255,0.2);
+    color: white;
+  }
+  .mockup-hero-section {
+    background: linear-gradient(135deg, #f8f9ff 0%, #eef3ff 100%);
+    padding: 28px 18px 22px;
+    text-align: center;
+  }
+  .mh-tag {
+    display: inline-block;
+    background: rgba(27,94,247,0.1);
+    color: var(--primary);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 50px;
+    margin-bottom: 10px;
+    letter-spacing: 0.3px;
+  }
+  .mh-title { font-size: 18px; font-weight: 900; color: var(--dark); letter-spacing: -0.8px; margin-bottom: 8px; }
+  .mh-sub { font-size: 11px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+  .mh-btn {
+    display: inline-block;
+    padding: 8px 22px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .mh-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 6px; }
+  .mh-card {
+    background: white;
+    border-radius: 10px;
+    padding: 10px 6px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .mh-card-icon { font-size: 20px; margin-bottom: 4px; }
+  .mh-card-label { font-size: 9px; font-weight: 600; color: var(--mid); }
+  .mockup-footer-bar {
+    background: var(--dark);
+    padding: 10px 18px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+  .mf-text { font-size: 9px; color: rgba(255,255,255,0.6); }
+  .mf-link { font-size: 9px; color: var(--primary); font-weight: 600; }
+  .hero-float-cards {
+    position: absolute;
+    top: -20px; right: -30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .float-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 12px 16px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 170px;
+    animation: float 4s ease-in-out infinite;
+  }
+  .float-card:nth-child(2) { animation-delay: 1.5s; }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .float-icon { font-size: 22px; }
+  .float-info {}
+  .float-title-sm { font-size: 11px; font-weight: 700; color: var(--dark); letter-spacing: -0.3px; }
+  .float-sub-sm { font-size: 10px; color: var(--muted); }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 100px 5%; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-label::before {
+    content: '';
+    width: 20px; height: 2px;
+    background: var(--primary);
+    border-radius: 2px;
+  }
+  .section-title {
+    font-size: clamp(28px, 3.5vw, 46px);
+    font-weight: 900;
+    color: var(--dark);
+    letter-spacing: -2px;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .section-title .hl { color: var(--primary); }
+  .section-title .hl-red { color: var(--accent); }
+  .section-desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 520px;
+  }
+  .text-center { text-align: center; }
+  .text-center .section-label { justify-content: center; }
+  .text-center .section-label::before { display: none; }
+  .text-center .section-desc { margin: 0 auto; }
+
+  /* ── FEATURES ── */
+  .features { background: var(--light); }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+  .feature-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px;
+    border: 1px solid var(--border);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), #7EB2FF);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: var(--transition);
+  }
+  .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+  .feature-card:hover::before { transform: scaleX(1); }
+  .feature-icon-wrap {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 24px;
+  }
+  .icon-blue { background: var(--primary-light); }
+  .icon-red { background: #FFF0EE; }
+  .icon-green { background: #EDFAF5; }
+  .icon-yellow { background: #FFFBEA; }
+  .icon-purple { background: #F3F0FF; }
+  .icon-teal { background: #E8FFFE; }
+  .feature-title { font-size: 18px; font-weight: 800; color: var(--dark); letter-spacing: -0.8px; margin-bottom: 10px; }
+  .feature-desc { font-size: 14px; color: var(--muted); line-height: 1.75; }
+  .feature-tag {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+
+  /* ── HOW IT WORKS ── */
+  .steps-wrap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 60px;
+    position: relative;
+  }
+  .steps-wrap::before {
+    content: '';
+    position: absolute;
+    top: 36px;
+    left: calc(12.5% + 24px);
+    right: calc(12.5% + 24px);
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), rgba(27,94,247,0.1));
+    z-index: 0;
+  }
+  .step-item {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    padding: 0 12px;
+  }
+  .step-num {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--white);
+    font-size: 24px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 8px 22px rgba(27,94,247,0.35);
+    border: 4px solid var(--white);
+    letter-spacing: -1px;
+  }
+  .step-item:nth-child(even) .step-num { background: var(--dark); box-shadow: 0 8px 22px rgba(10,15,30,0.25); }
+  .step-title { font-size: 16px; font-weight: 800; color: var(--dark); letter-spacing: -0.5px; margin-bottom: 8px; }
+  .step-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  /* ── PRICING ── */
+  .pricing { background: var(--dark2); }
+  .pricing .section-title { color: var(--white); }
+  .pricing .section-desc { color: rgba(255,255,255,0.55); }
+  .pricing .section-label { color: #7EB2FF; }
+  .pricing .section-label::before { background: #7EB2FF; }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 60px;
+  }
+  .plan-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+  .plan-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-4px); border-color: rgba(255,255,255,0.2); }
+  .plan-card.featured {
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: scale(1.03);
+    box-shadow: 0 16px 48px rgba(27,94,247,0.5);
+  }
+  .plan-card.featured:hover { transform: scale(1.03) translateY(-4px); }
+  .plan-badge {
+    position: absolute;
+    top: 18px; right: 18px;
+    background: var(--accent);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+  }
+  .plan-name { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.7); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+  .plan-card.featured .plan-name { color: rgba(255,255,255,0.85); }
+  .plan-price {
+    font-size: 38px;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .plan-price-unit { font-size: 14px; font-weight: 400; letter-spacing: 0; opacity: 0.7; margin-left: 2px; }
+  .plan-cycle { font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 24px; }
+  .plan-divider { height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 22px; }
+  .plan-card.featured .plan-divider { background: rgba(255,255,255,0.25); }
+  .plan-features { list-style: none; margin-bottom: 28px; display: flex; flex-direction: column; gap: 11px; }
+  .plan-features li {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .plan-card.featured .plan-features li { color: rgba(255,255,255,0.9); }
+  .plan-features li::before {
+    content: '✓';
+    width: 18px; height: 18px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 800;
+    flex-shrink: 0;
+    color: var(--accent2);
+  }
+  .plan-card.featured .plan-features li::before { background: rgba(255,255,255,0.25); color: var(--white); }
+  .btn-plan {
+    width: 100%;
+    padding: 13px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    letter-spacing: -0.3px;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+  }
+  .btn-plan-ghost {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.85);
+  }
+  .btn-plan-ghost:hover { border-color: var(--primary); color: var(--primary); background: rgba(27,94,247,0.1); }
+  .btn-plan-white {
+    background: var(--white);
+    border: none;
+    color: var(--primary);
+  }
+  .btn-plan-white:hover { background: #EEF3FF; }
+
+  /* ── REVIEWS ── */
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 22px;
+    margin-top: 60px;
+  }
+  .review-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 30px 28px;
+    transition: var(--transition);
+    position: relative;
+  }
+  .review-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-4px); }
+  .review-stars { color: #F59E0B; font-size: 16px; letter-spacing: 2px; margin-bottom: 16px; }
+  .review-text { font-size: 15px; color: var(--mid); line-height: 1.8; margin-bottom: 22px; font-weight: 400; }
+  .review-text::before {
+    content: '"';
+    font-size: 48px;
+    color: var(--primary-light);
+    font-family: Georgia, serif;
+    line-height: 0;
+    position: relative;
+    top: 14px;
+    margin-right: 4px;
+  }
+  .review-author { display: flex; align-items: center; gap: 12px; }
+  .author-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+  }
+  .av-blue { background: linear-gradient(135deg, var(--primary), #7EB2FF); }
+  .av-red { background: linear-gradient(135deg, var(--accent), #FF9058); }
+  .av-green { background: linear-gradient(135deg, var(--accent2), #00E4A8); }
+  .av-orange { background: linear-gradient(135deg, #F59E0B, #FCD34D); }
+  .av-purple { background: linear-gradient(135deg, #7C3AED, #A78BFA); }
+  .av-teal { background: linear-gradient(135deg, #0891B2, #22D3EE); }
+  .author-info {}
+  .author-name { font-size: 14px; font-weight: 700; color: var(--dark); }
+  .author-biz { font-size: 12px; color: var(--muted); }
+
+  /* ── FAQ ── */
+  .faq { background: var(--light); }
+  .faq-list { max-width: 720px; margin: 50px auto 0; display: flex; flex-direction: column; gap: 12px; }
+  .faq-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: var(--transition);
+  }
+  .faq-item:hover { border-color: var(--primary); }
+  .faq-q {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark);
+    letter-spacing: -0.4px;
+    user-select: none;
+  }
+  .faq-q::after {
+    content: '+';
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--primary);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    padding: 0 24px;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding: 0 24px 20px; }
+
+  /* ── CTA ── */
+  .cta {
+    background: linear-gradient(135deg, var(--primary) 0%, #0D3ECC 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+  }
+  .cta-inner { position: relative; z-index: 2; }
+  .cta-title { font-size: clamp(30px, 4vw, 52px); font-weight: 900; color: var(--white); letter-spacing: -2px; margin-bottom: 16px; line-height: 1.15; }
+  .cta-desc { font-size: 17px; color: rgba(255,255,255,0.7); margin-bottom: 40px; line-height: 1.7; }
+  .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-cta-white {
+    padding: 16px 40px;
+    background: var(--white);
+    color: var(--primary);
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  .btn-cta-white:hover { background: #EEF3FF; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+  .btn-cta-ghost {
+    padding: 16px 32px;
+    background: transparent;
+    color: rgba(255,255,255,0.9);
+    border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+  }
+  .btn-cta-ghost:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    padding: 60px 5% 36px;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 32px;
+  }
+  .footer-logo { font-size: 20px; font-weight: 900; color: var(--white); letter-spacing: -1px; margin-bottom: 12px; }
+  .footer-logo span { color: var(--primary); }
+  .footer-tagline { font-size: 13px; line-height: 1.7; margin-bottom: 20px; }
+  .footer-col-title { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.8); letter-spacing: -0.3px; margin-bottom: 16px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: rgba(255,255,255,0.85); }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .footer-copy { font-size: 12px; }
+  .footer-legal { display: flex; gap: 20px; }
+  .footer-legal a { font-size: 12px; color: rgba(255,255,255,0.35); text-decoration: none; }
+  .footer-legal a:hover { color: rgba(255,255,255,0.7); }
+
+  /* ── CONTACT FORM ── */
+  .contact { background: var(--white); }
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 64px;
+    align-items: start;
+    margin-top: 60px;
+  }
+  .contact-info {}
+  .contact-info-title {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--dark);
+    letter-spacing: -1.2px;
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+  .contact-info-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.9;
+    margin-bottom: 36px;
+  }
+  .contact-channels { display: flex; flex-direction: column; gap: 14px; }
+  .contact-channel-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    background: var(--light);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+    text-decoration: none;
+  }
+  .contact-channel-item:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    transform: translateX(4px);
+  }
+  .ch-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .ch-icon-kakao { background: #FEE500; }
+  .ch-icon-phone { background: #E8F5E9; }
+  .ch-icon-email { background: var(--primary-light); }
+  .ch-text {}
+  .ch-label { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.3px; margin-bottom: 2px; }
+  .ch-value { font-size: 15px; font-weight: 700; color: var(--dark); letter-spacing: -0.4px; }
+  .ch-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  .contact-form-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px 38px;
+    box-shadow: 0 8px 40px rgba(27,94,247,0.07);
+  }
+  .form-title { font-size: 20px; font-weight: 800; color: var(--dark); letter-spacing: -0.8px; margin-bottom: 6px; }
+  .form-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--mid);
+    margin-bottom: 7px;
+    letter-spacing: -0.2px;
+  }
+  .form-group label .req { color: var(--accent); margin-left: 2px; }
+  .form-control {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--dark);
+    background: var(--white);
+    transition: var(--transition);
+    outline: none;
+    -webkit-appearance: none;
+  }
+  .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(27,94,247,0.1);
+  }
+  .form-control::placeholder { color: #C4C9D4; }
+  select.form-control { cursor: pointer; }
+  textarea.form-control { resize: vertical; min-height: 100px; line-height: 1.7; }
+  .form-plan-select {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .plan-radio { display: none; }
+  .plan-radio-label {
+    display: block;
+    text-align: center;
+    padding: 10px 6px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    transition: var(--transition);
+    line-height: 1.4;
+  }
+  .plan-radio:checked + .plan-radio-label {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+  .plan-radio-label:hover { border-color: var(--primary); color: var(--primary); }
+  .plan-price-sm { display: block; font-size: 10px; font-weight: 400; margin-top: 2px; color: inherit; opacity: 0.75; }
+  .form-check { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; }
+  .form-check input[type="checkbox"] {
+    width: 16px; height: 16px;
+    margin-top: 2px;
+    accent-color: var(--primary);
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .form-check label { font-size: 12px; color: var(--muted); line-height: 1.6; cursor: pointer; }
+  .form-check label a { color: var(--primary); text-decoration: underline; }
+  .btn-submit {
+    width: 100%;
+    padding: 16px;
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: var(--transition);
+    letter-spacing: -0.5px;
+    box-shadow: 0 6px 22px rgba(27,94,247,0.35);
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .btn-submit:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(27,94,247,0.45); }
+  .btn-submit:active { transform: translateY(0); }
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .form-success-icon { font-size: 56px; margin-bottom: 16px; }
+  .form-success-title { font-size: 22px; font-weight: 900; color: var(--dark); letter-spacing: -1px; margin-bottom: 10px; }
+  .form-success-desc { font-size: 14px; color: var(--muted); line-height: 1.8; }
+  @media (max-width: 1024px) {
+    .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+    .form-plan-select { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .form-row { grid-template-columns: 1fr; }
+    .contact-form-card { padding: 28px 22px; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+    .steps-wrap { grid-template-columns: repeat(2, 1fr); }
+    .steps-wrap::before { display: none; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+    section { padding: 72px 4%; }
+    .features-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .plan-card.featured { transform: none; }
+    .steps-wrap { grid-template-columns: 1fr 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+
+  /* ── MOBILE NAV ── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .nav-hamburger span {
+    width: 22px; height: 2px;
+    background: var(--mid);
+    border-radius: 2px;
+    transition: var(--transition);
+  }
+  @media (max-width: 768px) {
+    .nav-hamburger { display: flex; }
+    .nav-cta .btn-ghost { display: none; }
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    background: var(--primary);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-flex;
+    animation: marquee 25s linear infinite;
+    gap: 0;
+  }
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 32px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+  }
+  .marquee-dot { width: 4px; height: 4px; background: rgba(255,255,255,0.5); border-radius: 50%; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">창업홈<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#features">주요 기능</a></li>
+    <li><a href="#how">이용 방법</a></li>
+    <li><a href="#pricing">요금제</a></li>
+    <li><a href="#reviews">고객 후기</a></li>
+    <li><a href="#faq">자주 묻는 질문</a></li>
+    <li><a href="#contact">무료 상담</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="#" class="btn-ghost">로그인</a>
+    <a href="#pricing" class="btn-primary">무료 시작하기</a>
+    <div class="nav-hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        <span>소상공인 맞춤형 홈페이지 플랫폼</span>
+      </div>
+      <h1 class="hero-title">
+        내 가게 홈페이지,<br>
+        <span class="accent-blue">3분 만에</span><br>
+        <span class="accent-red">뚝딱</span> 완성
+      </h1>
+      <p class="hero-desc">
+        코딩도, 디자인도, 큰 비용도 필요 없어요.<br>
+        사진과 정보만 보내주시면 전문가 수준의<br>
+        홈페이지가 완성됩니다. 지금 바로 시작하세요.
+      </p>
+      <div class="hero-actions">
+        <a href="#pricing" class="btn-hero-primary">무료로 시작하기 →</a>
+        <a href="#features" class="btn-hero-ghost">기능 살펴보기</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">2,400<span>+</span></div>
+          <div class="stat-label">등록 가게 수</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">98<span>%</span></div>
+          <div class="stat-label">고객 만족도</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3<span>만원~</span></div>
+          <div class="stat-label">최저 월 이용료</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-float-cards">
+        <div class="float-card">
+          <div class="float-icon">🔍</div>
+          <div class="float-info">
+            <div class="float-title-sm">네이버 검색 상위 노출</div>
+            <div class="float-sub-sm">SEO 자동 최적화</div>
+          </div>
+        </div>
+        <div class="float-card">
+          <div class="float-icon">📅</div>
+          <div class="float-info">
+            <div class="float-title-sm">예약 알림톡 발송</div>
+            <div class="float-sub-sm">카카오톡 자동 연동</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dot d1"></div>
+          <div class="mockup-dot d2"></div>
+          <div class="mockup-dot d3"></div>
+        </div>
+        <div class="mockup-screen">
+          <div class="mockup-header">
+            <div class="mockup-logo-text">✨ 우리동네 맛집</div>
+            <div class="mockup-nav-pills">
+              <div class="m-pill">메뉴</div>
+              <div class="m-pill">예약</div>
+            </div>
+          </div>
+          <div class="mockup-hero-section">
+            <div class="mh-tag">📍 서울 강남구</div>
+            <div class="mh-title">진심을 담은 한 그릇</div>
+            <div class="mh-sub">30년 전통의 손맛, 매일 신선한 재료로<br>정성껏 준비합니다.</div>
+            <div class="mh-btn">📞 예약하기</div>
+            <div class="mh-cards">
+              <div class="mh-card"><div class="mh-card-icon">🍜</div><div class="mh-card-label">메뉴보기</div></div>
+              <div class="mh-card"><div class="mh-card-icon">📸</div><div class="mh-card-label">갤러리</div></div>
+              <div class="mh-card"><div class="mh-card-icon">⭐</div><div class="mh-card-label">리뷰</div></div>
+            </div>
+          </div>
+          <div class="mockup-footer-bar">
+            <span class="mf-text">창업홈으로 제작</span>
+            <span class="mf-link">내 가게도 만들기 →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">네이버 SEO 최적화<div class="marquee-dot"></div></span>
+    <span class="marquee-item">카카오톡 알림톡 예약<div class="marquee-dot"></div></span>
+    <span class="marquee-item">모바일 반응형 디자인<div class="marquee-dot"></div></span>
+    <span class="marquee-item">커스텀 도메인 연결<div class="marquee-dot"></div></span>
+    <span class="marquee-item">SNS 자동 연동<div class="marquee-dot"></div></span>
+    <span class="marquee-item">24시간 고객센터<div class="marquee-dot"></div></span>
+    <span class="marquee-item">월 3만원부터 시작<div class="marquee-dot"></div></span>
+    <span class="marquee-item">코딩 불필요<div class="marquee-dot"></div></span>
+    <span class="marquee-item">네이버 SEO 최적화<div class="marquee-dot"></div></span>
+    <span class="marquee-item">카카오톡 알림톡 예약<div class="marquee-dot"></div></span>
+    <span class="marquee-item">모바일 반응형 디자인<div class="marquee-dot"></div></span>
+    <span class="marquee-item">커스텀 도메인 연결<div class="marquee-dot"></div></span>
+    <span class="marquee-item">SNS 자동 연동<div class="marquee-dot"></div></span>
+    <span class="marquee-item">24시간 고객센터<div class="marquee-dot"></div></span>
+    <span class="marquee-item">월 3만원부터 시작<div class="marquee-dot"></div></span>
+    <span class="marquee-item">코딩 불필요<div class="marquee-dot"></div></span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-inner">
+    <div class="text-center reveal">
+      <div class="section-label">주요 기능</div>
+      <h2 class="section-title">꼭 필요한 기능만<br><span class="hl">담았습니다</span></h2>
+      <p class="section-desc">복잡한 기능은 빼고, 실제 매출에 도움이 되는<br>핵심 기능만 알차게 구성했습니다.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon-wrap icon-blue">🔍</div>
+        <div class="feature-title">네이버·구글 SEO 최적화</div>
+        <div class="feature-desc">검색엔진 최적화를 자동으로 적용해 내 가게가 검색 상위에 노출되도록 도와드립니다. 별도 설정 없이 자동 처리됩니다.</div>
+        <span class="feature-tag">자동 적용</span>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon-wrap icon-yellow">📲</div>
+        <div class="feature-title">카카오 알림톡 예약 연동</div>
+        <div class="feature-desc">손님이 홈페이지에서 예약하면 카카오 알림톡으로 즉시 알림이 발송됩니다. 놓치는 예약 없이 매출을 관리하세요.</div>
+        <span class="feature-tag">실시간 알림</span>
+      </div>
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-icon-wrap icon-green">📱</div>
+        <div class="feature-title">PC·모바일 완벽 반응형</div>
+        <div class="feature-desc">PC, 태블릿, 스마트폰 어떤 기기에서도 최적화된 화면으로 표시됩니다. 고객이 편하게 방문할 수 있습니다.</div>
+        <span class="feature-tag">자동 최적화</span>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon-wrap icon-purple">🌐</div>
+        <div class="feature-title">커스텀 도메인 연결</div>
+        <div class="feature-desc">www.내가게이름.com 같은 나만의 도메인을 간편하게 연결할 수 있습니다. 전문적인 브랜드 이미지를 구축하세요.</div>
+        <span class="feature-tag">플랜 선택</span>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon-wrap icon-red">📸</div>
+        <div class="feature-title">SNS·블로그 자동 연동</div>
+        <div class="feature-desc">인스타그램, 네이버 블로그 등 SNS 계정을 홈페이지에 연동해 최신 콘텐츠를 자동으로 불러옵니다.</div>
+        <span class="feature-tag">자동 동기화</span>
+      </div>
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-icon-wrap icon-teal">✏️</div>
+        <div class="feature-title">언제든 자유롭게 수정</div>
+        <div class="feature-desc">메뉴, 영업시간, 이벤트 정보 등을 플랜별 횟수 내에서 자유롭게 수정할 수 있습니다. 코딩 없이 쉽게 업데이트하세요.</div>
+        <span class="feature-tag">무료 수정</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="text-center reveal">
+      <div class="section-label">이용 방법</div>
+      <h2 class="section-title"><span class="hl">4단계</span>로<br>홈페이지 완성</h2>
+      <p class="section-desc">복잡한 과정 없이 간단한 4단계만 따라오시면<br>전문가 수준의 홈페이지가 완성됩니다.</p>
+    </div>
+    <div class="steps-wrap">
+      <div class="step-item reveal reveal-delay-1">
+        <div class="step-num">01</div>
+        <div class="step-title">신청서 작성</div>
+        <div class="step-desc">원하는 플랜을 선택하고<br>기본 정보를 입력하세요.<br>5분이면 충분합니다.</div>
+      </div>
+      <div class="step-item reveal reveal-delay-2">
+        <div class="step-num">02</div>
+        <div class="step-title">사진·자료 전달</div>
+        <div class="step-desc">가게 사진, 메뉴, 위치 등<br>필요한 자료를 카카오톡으로<br>간편하게 보내주세요.</div>
+      </div>
+      <div class="step-item reveal reveal-delay-3">
+        <div class="step-num">03</div>
+        <div class="step-title">전문가 제작</div>
+        <div class="step-desc">전문 디자이너가 업종에 맞는<br>최적의 홈페이지를<br>제작해 드립니다.</div>
+      </div>
+      <div class="step-item reveal reveal-delay-4">
+        <div class="step-num">04</div>
+        <div class="step-title">확인 후 오픈!</div>
+        <div class="step-desc">완성된 홈페이지를 확인 후<br>승인하시면 즉시 오픈!<br>바로 운영을 시작하세요.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-inner">
+    <div class="text-center reveal">
+      <div class="section-label">요금제</div>
+      <h2 class="section-title" style="color:white;">합리적인 가격으로<br><span style="color:#7EB2FF;">시작하세요</span></h2>
+      <p class="section-desc" style="color:rgba(255,255,255,0.55);">월 구독료만으로 전문가 수준의 홈페이지를 유지하세요.<br>언제든 플랜 변경이 가능합니다.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="plan-card reveal reveal-delay-1">
+        <div class="plan-name">베이직</div>
+        <div class="plan-price">3<span class="plan-price-unit">만원</span></div>
+        <div class="plan-cycle">/ 월 (부가세 포함)</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>월 1회 무료 수정</li>
+          <li>기본 도메인 제공</li>
+          <li>일 트래픽 100MB</li>
+          <li>모바일 반응형</li>
+          <li>네이버 SEO 기본 적용</li>
+        </ul>
+        <a href="#" class="btn-plan btn-plan-ghost">시작하기</a>
+      </div>
+      <div class="plan-card featured reveal reveal-delay-2">
+        <div class="plan-badge">인기 1위</div>
+        <div class="plan-name">스탠다드</div>
+        <div class="plan-price">6<span class="plan-price-unit">만원</span></div>
+        <div class="plan-cycle">/ 월 (부가세 포함)</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>월 2회 무료 수정</li>
+          <li>커스텀 도메인 1개</li>
+          <li>일 트래픽 1GB</li>
+          <li>카카오 알림톡 예약</li>
+          <li>SNS 연동</li>
+          <li>SEO 고급 적용</li>
+        </ul>
+        <a href="#" class="btn-plan btn-plan-white">시작하기</a>
+      </div>
+      <div class="plan-card reveal reveal-delay-3">
+        <div class="plan-name">프로페셔널</div>
+        <div class="plan-price">9<span class="plan-price-unit">만원</span></div>
+        <div class="plan-cycle">/ 월 (부가세 포함)</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>월 3회 무료 수정</li>
+          <li>커스텀 도메인 무제한</li>
+          <li>트래픽 무제한</li>
+          <li>우선 전담 담당자</li>
+          <li>통계 대시보드 제공</li>
+          <li>프리미엄 템플릿</li>
+        </ul>
+        <a href="#" class="btn-plan btn-plan-ghost">시작하기</a>
+      </div>
+      <div class="plan-card reveal reveal-delay-4">
+        <div class="plan-name">B2B / 프랜차이즈</div>
+        <div class="plan-price" style="font-size:28px; letter-spacing:-1px;">견적<span class="plan-price-unit">상담</span></div>
+        <div class="plan-cycle">맞춤형 패키지</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>맞춤형 디자인·기능</li>
+          <li>다중 지점 관리</li>
+          <li>트래픽 무제한</li>
+          <li>전담 매니저 배정</li>
+          <li>고객 예산 맞춤 견적</li>
+          <li>계약 기간 협의 가능</li>
+        </ul>
+        <a href="#" class="btn-plan btn-plan-ghost">문의하기</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="section-inner">
+    <div class="text-center reveal">
+      <div class="section-label">고객 후기</div>
+      <h2 class="section-title">사장님들의<br><span class="hl">솔직한 이야기</span></h2>
+      <p class="section-desc">실제 창업홈을 이용 중인 사장님들의 생생한 후기입니다.</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal reveal-delay-1">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">다른 곳은 직접 코드 입력하고 디자인도 해야 했는데, 여기는 사진이랑 메뉴판 사진 보내드렸더니 며칠 만에 완성해 주셨어요. 진짜 편해요!</p>
+        <div class="review-author">
+          <div class="author-avatar av-blue">김</div>
+          <div class="author-info">
+            <div class="author-name">김○○ 사장님</div>
+            <div class="author-biz">서울 마포구 · 커피숍 운영</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal reveal-delay-2">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">홈페이지 생기고 나서 네이버에서 검색이 되기 시작했어요. 신규 손님이 눈에 띄게 늘었고, 예약도 카카오로 바로 와서 너무 편합니다.</p>
+        <div class="review-author">
+          <div class="author-avatar av-red">박</div>
+          <div class="author-info">
+            <div class="author-name">박○○ 사장님</div>
+            <div class="author-biz">부산 해운대구 · 횟집 운영</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal reveal-delay-3">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">컴퓨터를 잘 몰라도 담당자분이 친절하게 알려주시고 대신 다 해주셨어요. 월 6만원에 이 정도면 정말 가성비 최고인 것 같아요.</p>
+        <div class="review-author">
+          <div class="author-avatar av-green">이</div>
+          <div class="author-info">
+            <div class="author-name">이○○ 사장님</div>
+            <div class="author-biz">대구 수성구 · 백반집 운영</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal reveal-delay-1">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">인스타그램 연동이 정말 편리해요. 새 게시물 올리면 홈페이지에도 자동으로 뜨니까 따로 관리 안 해도 돼서 시간이 많이 절약됩니다.</p>
+        <div class="review-author">
+          <div class="author-avatar av-orange">최</div>
+          <div class="author-info">
+            <div class="author-name">최○○ 사장님</div>
+            <div class="author-biz">인천 연수구 · 네일샵 운영</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal reveal-delay-2">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">프랜차이즈 5개 지점 홈페이지를 한 번에 관리할 수 있어서 정말 좋아요. B2B 플랜으로 견적 받았는데 합리적이었습니다. 강력 추천!</p>
+        <div class="review-author">
+          <div class="author-avatar av-purple">정</div>
+          <div class="author-info">
+            <div class="author-name">정○○ 대표</div>
+            <div class="author-biz">경기 수원시 · 치킨 프랜차이즈</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card reveal reveal-delay-3">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">수정 요청드리면 하루이틀 안에 바로 반영해 주세요. 메뉴 가격도 바뀌고 이벤트도 자주 하는데 빠르게 업데이트해 주셔서 감사합니다.</p>
+        <div class="review-author">
+          <div class="author-avatar av-teal">한</div>
+          <div class="author-info">
+            <div class="author-name">한○○ 사장님</div>
+            <div class="author-biz">광주 북구 · 미용실 운영</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="section-inner">
+    <div class="text-center reveal">
+      <div class="section-label">자주 묻는 질문</div>
+      <h2 class="section-title">궁금한 점이<br><span class="hl">있으신가요?</span></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal reveal-delay-1">
+        <div class="faq-q">홈페이지 제작까지 얼마나 걸리나요?</div>
+        <div class="faq-a">자료 수령 후 평균 3~5 영업일 내에 초안을 완성해 드립니다. 자료가 빠르게 전달될수록 더 빨리 완성됩니다. 급한 경우 별도 협의를 통해 빠른 처리도 가능합니다.</div>
+      </div>
+      <div class="faq-item reveal reveal-delay-2">
+        <div class="faq-q">코딩이나 디자인을 전혀 몰라도 되나요?</div>
+        <div class="faq-a">네, 전혀 몰라도 됩니다. 가게 사진과 기본 정보(메뉴, 영업시간, 위치 등)만 보내주시면 저희 전문 팀이 모든 제작을 대신 처리해 드립니다. 완성 후에도 수정이 필요하면 담당자에게 연락만 주시면 됩니다.</div>
+      </div>
+      <div class="faq-item reveal reveal-delay-3">
+        <div class="faq-q">계약 기간이 정해져 있나요?</div>
+        <div class="faq-a">최소 계약 기간은 1개월이며, 이후에는 언제든 해지하실 수 있습니다. 연간 계약 시 2개월 무료 혜택(약 16.7% 할인)을 제공해 드립니다.</div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <div class="faq-q">기존에 사용하던 도메인을 연결할 수 있나요?</div>
+        <div class="faq-a">스탠다드 이상 플랜에서 기존 보유 도메인 연결이 가능합니다. 도메인 구입부터 연결까지 담당자가 안내해 드리며, 기술적인 부분도 함께 처리해 드립니다.</div>
+      </div>
+      <div class="faq-item reveal reveal-delay-2">
+        <div class="faq-q">업종별 전용 템플릿이 있나요?</div>
+        <div class="faq-a">음식점, 카페, 미용실, 네일샵, 학원, 의원 등 20여 가지 업종별 최적화 템플릿을 보유하고 있습니다. 업종 특성에 맞는 레이아웃과 색상으로 제작됩니다.</div>
+      </div>
+      <div class="faq-item reveal reveal-delay-3">
+        <div class="faq-q">홈페이지 오픈 후 운영은 어떻게 하나요?</div>
+        <div class="faq-a">오픈 후에는 플랜별 무료 수정 서비스를 이용하시면 됩니다. 카카오채널을 통해 담당자에게 수정 사항을 전달하시면 빠르게 반영해 드립니다. 24시간 채팅 상담도 운영 중입니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <div class="text-center reveal">
+      <div class="section-label">무료 상담 신청</div>
+      <h2 class="section-title">궁금한 게 있으시면<br><span class="hl">바로 물어보세요</span></h2>
+      <p class="section-desc">담당자가 1영업일 내에 직접 연락드립니다.<br>부담 없이 무엇이든 남겨주세요.</p>
+    </div>
+    <div class="contact-wrap">
+      <!-- 왼쪽: 연락처 안내 -->
+      <div class="contact-info reveal reveal-delay-1">
+        <div class="contact-info-title">빠르고 친절하게<br>답변드립니다 😊</div>
+        <p class="contact-info-desc">
+          홈페이지 제작 관련 궁금한 점, 요금제 선택,<br>
+          업종별 맞춤 상담까지 무엇이든 편하게<br>
+          문의해 주세요. 전담 담당자가 직접 안내드립니다.
+        </p>
+        <div class="contact-channels">
+          <a href="https://pf.kakao.com" target="_blank" class="contact-channel-item">
+            <div class="ch-icon ch-icon-kakao">💬</div>
+            <div class="ch-text">
+              <div class="ch-label">카카오톡 채널</div>
+              <div class="ch-value">@창업홈</div>
+              <div class="ch-sub">평일 09:00 – 18:00 실시간 상담</div>
+            </div>
+          </a>
+          <a href="tel:0212345678" class="contact-channel-item">
+            <div class="ch-icon ch-icon-phone">📞</div>
+            <div class="ch-text">
+              <div class="ch-label">전화 상담</div>
+              <div class="ch-value">02-1234-5678</div>
+              <div class="ch-sub">평일 09:00 – 18:00 (점심 12-13시 제외)</div>
+            </div>
+          </a>
+          <a href="/cdn-cgi/l/email-protection#422a272e3202212a232c2527202a2d2f276c2930" class="contact-channel-item">
+            <div class="ch-icon ch-icon-email">📧</div>
+            <div class="ch-text">
+              <div class="ch-label">이메일</div>
+              <div class="ch-value"><span class="__cf_email__" data-cfemail="7018151c00301318111e171512181f1d155e1b02">[email&#160;protected]</span></div>
+              <div class="ch-sub">24시간 접수, 1영업일 내 답변</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 오른쪽: 문의 폼 -->
+      <div class="reveal reveal-delay-2">
+        <div class="contact-form-card">
+          <div id="contactFormWrap">
+            <div class="form-title">📋 무료 상담 신청서</div>
+            <p class="form-subtitle">아래 정보를 입력하시면 담당자가 맞춤 상담을 도와드립니다.</p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>사장님 성함 <span class="req">*</span></label>
+                <input type="text" class="form-control" placeholder="홍길동" id="f_name">
+              </div>
+              <div class="form-group">
+                <label>연락처 <span class="req">*</span></label>
+                <input type="tel" class="form-control" placeholder="010-0000-0000" id="f_phone">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>업체명 (상호)</label>
+                <input type="text" class="form-control" placeholder="예: 행복한 김밥집" id="f_biz">
+              </div>
+              <div class="form-group">
+                <label>업종 선택 <span class="req">*</span></label>
+                <select class="form-control" id="f_type">
+                  <option value="" disabled selected>업종을 선택해주세요</option>
+                  <option>음식점 / 카페</option>
+                  <option>미용실 / 네일샵</option>
+                  <option>학원 / 교육</option>
+                  <option>의원 / 한의원</option>
+                  <option>쇼핑몰 / 소매</option>
+                  <option>피트니스 / 헬스장</option>
+                  <option>인테리어 / 시공</option>
+                  <option>펜션 / 숙박</option>
+                  <option>기타</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>관심 요금제 <span class="req">*</span></label>
+              <div class="form-plan-select">
+                <div>
+                  <input type="radio" name="plan" id="p1" class="plan-radio" value="베이직">
+                  <label for="p1" class="plan-radio-label">베이직<span class="plan-price-sm">월 3만원</span></label>
+                </div>
+                <div>
+                  <input type="radio" name="plan" id="p2" class="plan-radio" value="스탠다드" checked>
+                  <label for="p2" class="plan-radio-label">스탠다드<span class="plan-price-sm">월 6만원</span></label>
+                </div>
+                <div>
+                  <input type="radio" name="plan" id="p3" class="plan-radio" value="프로페셔널">
+                  <label for="p3" class="plan-radio-label">프로<span class="plan-price-sm">월 9만원</span></label>
+                </div>
+                <div>
+                  <input type="radio" name="plan" id="p4" class="plan-radio" value="B2B">
+                  <label for="p4" class="plan-radio-label">B2B<span class="plan-price-sm">견적 상담</span></label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>문의 내용</label>
+              <textarea class="form-control" placeholder="궁금한 점, 원하시는 기능, 참고 사이트 URL 등 자유롭게 적어주세요." id="f_message"></textarea>
+            </div>
+
+            <div class="form-check">
+              <input type="checkbox" id="f_agree">
+              <label for="f_agree">
+                <a href="#">개인정보 수집·이용</a>에 동의합니다. (이름, 연락처를 상담 목적으로 수집하며, 상담 완료 후 즉시 파기됩니다.)
+              </label>
+            </div>
+
+            <button class="btn-submit" id="submitBtn" onclick="handleSubmit()">
+              무료 상담 신청하기 →
+            </button>
+          </div>
+
+          <div class="form-success" id="formSuccess">
+            <div class="form-success-icon">🎉</div>
+            <div class="form-success-title">신청이 완료됐습니다!</div>
+            <p class="form-success-desc">
+              입력하신 연락처로 담당자가<br>
+              <strong>1영업일 내에 직접 연락드립니다.</strong><br><br>
+              기다리시는 동안 카카오톡 채널 <strong>@창업홈</strong>으로<br>
+              실시간 상담도 가능합니다 😊
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="section-inner cta-inner reveal">
+    <h2 class="cta-title">지금 바로 시작하세요,<br>첫 달은 50% 할인!</h2>
+    <p class="cta-desc">지금 신청하시면 첫 달 이용료 50% 할인 혜택을 드립니다.<br>언제든 해지 가능하니 부담 없이 시작해보세요.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-cta-white">지금 무료 시작하기 →</a>
+      <a href="#" class="btn-cta-ghost">📞 전화 상담 요청</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">창업홈<span>.</span></div>
+        <p class="footer-tagline">소상공인을 위한 합리적인<br>홈페이지 플랫폼입니다.<br>월 3만원부터 시작하세요.</p>
+        <div style="display:flex; gap:10px;">
+          <a href="#" style="font-size:13px; color:rgba(255,255,255,0.4); text-decoration:none;">📸 인스타</a>
+          <a href="#" style="font-size:13px; color:rgba(255,255,255,0.4); text-decoration:none;">💬 카카오</a>
+          <a href="#" style="font-size:13px; color:rgba(255,255,255,0.4); text-decoration:none;">📝 블로그</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">서비스</div>
+        <ul class="footer-links">
+          <li><a href="#">주요 기능 소개</a></li>
+          <li><a href="#">요금제 안내</a></li>
+          <li><a href="#">업종별 템플릿</a></li>
+          <li><a href="#">포트폴리오</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">고객지원</div>
+        <ul class="footer-links">
+          <li><a href="#">자주 묻는 질문</a></li>
+          <li><a href="#">1:1 문의</a></li>
+          <li><a href="#">카카오 채널</a></li>
+          <li><a href="#">공지사항</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">회사 정보</div>
+        <ul class="footer-links">
+          <li><a href="#">회사 소개</a></li>
+          <li><a href="#">파트너 제휴</a></li>
+          <li><a href="#">채용 안내</a></li>
+          <li><a href="#">투자 문의</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 창업홈. All rights reserved. | 사업자등록번호: 000-00-00000</p>
+      <div class="footer-legal">
+        <a href="#">이용약관</a>
+        <a href="#">개인정보처리방침</a>
+        <a href="#">이메일 무단수집거부</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+
+  // FAQ toggle
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Form submit
+  function handleSubmit() {
+    const name = document.getElementById('f_name').value.trim();
+    const phone = document.getElementById('f_phone').value.trim();
+    const biz = document.getElementById('f_biz').value.trim();
+    const type = document.getElementById('f_type').value;
+    const agree = document.getElementById('f_agree').checked;
+    const message = document.getElementById('f_message').value.trim();
+    const planEl = document.querySelector('input[name="plan"]:checked');
+    const plan = planEl ? planEl.value : '미선택';
+
+    if (!name) { alert('성함을 입력해주세요.'); return; }
+    if (!phone) { alert('연락처를 입력해주세요.'); return; }
+    if (!type) { alert('업종을 선택해주세요.'); return; }
+    if (!agree) { alert('개인정보 수집·이용에 동의해주세요.'); return; }
+
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxW5GRKe8aJvY2d6ILBHR2IT9JOctwgqe1UP_kocMdzk6iMEf1gBNcHDiZ2hNKsM7tbTg/exec'; // ← 여기에 배포 URL 붙여넣기
+
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = '전송 중...';
+    btn.disabled = true;
+
+    if (SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbxW5GRKe8aJvY2d6ILBHR2IT9JOctwgqe1UP_kocMdzk6iMEf1gBNcHDiZ2hNKsM7tbTg/exec') {
+      // URL 미설정 시 로컬 저장으로 fallback
+      const inquiry = { id: Date.now(), name, phone, biz, type, plan, message,
+        date: new Date().toLocaleString('ko-KR'), status: '미확인' };
+      const existing = JSON.parse(localStorage.getItem('changebhome_inquiries') || '[]');
+      existing.unshift(inquiry);
+      localStorage.setItem('changebhome_inquiries', JSON.stringify(existing));
+      document.getElementById('contactFormWrap').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      btn.textContent = '무료 상담 신청하기 →';
+      btn.disabled = false;
+      return;
+    }
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ name, phone, biz, type, plan, message }),
+    })
+    .then(r => r.json())
+    .then(res => {
+      if (res.result === 'success') {
+        document.getElementById('contactFormWrap').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+        document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        alert('전송 중 오류가 발생했습니다. 다시 시도해주세요.');
+      }
+    })
+    .catch(() => alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.'))
+    .finally(() => { btn.textContent = '무료 상담 신청하기 →'; btn.disabled = false; });
+  }
+
+  // Phone number auto-formatting
+  const phoneInput = document.getElementById('f_phone');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function() {
+      let v = this.value.replace(/\D/g,'');
+      if (v.length <= 3) this.value = v;
+      else if (v.length <= 7) this.value = v.slice(0,3) + '-' + v.slice(3);
+      else this.value = v.slice(0,3) + '-' + v.slice(3,7) + '-' + v.slice(7,11);
+    });
+  }
+
+  window.addEventListener('scr
