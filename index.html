@@ -1697,24 +1697,16 @@
       message: message
     });
 
-    fetch(SCRIPT_URL + '?' + params.toString())
-      .then(r => r.json())
-      .then(res => {
-        if (res.result === 'success') {
-          document.getElementById('contactFormWrap').style.display = 'none';
-          document.getElementById('formSuccess').style.display = 'block';
-          document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        } else {
-          alert('전송 중 오류가 발생했습니다. 다시 시도해주세요.');
-        }
-      })
-      .catch(() => {
-        alert('네트워크 오류가 발생했습니다. 다시 시도해주세요.');
-      })
-      .finally(() => {
-        btn.textContent = '무료 상담 신청하기 →';
-        btn.disabled = false;
-      });
+    // img 태그로 GET 요청 (CORS 완전 우회)
+    const img = new Image();
+    img.src = SCRIPT_URL + '?' + params.toString();
+    img.onload = img.onerror = function() {
+      document.getElementById('contactFormWrap').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      btn.textContent = '무료 상담 신청하기 →';
+      btn.disabled = false;
+    };
   }
 
   // Phone number auto-formatting
